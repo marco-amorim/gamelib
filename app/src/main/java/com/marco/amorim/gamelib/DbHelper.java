@@ -41,6 +41,11 @@ class DbHelper extends SQLiteOpenHelper {
     }
 
     void addGame(String gameTitle, String gameStudio, String gameStoreLink){
+        if (gameTitle.isEmpty() || gameStudio.isEmpty() || gameStoreLink.isEmpty()) {
+            Toast.makeText(context, "Please, fill all the inputs!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -66,14 +71,19 @@ class DbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    void updateData(String row_id, String game_title, String game_studio, String game_store_link){
+    void updateGame(String rowId, String gameTitle, String gameStudio, String gameStoreLink){
+        if (gameTitle.isEmpty() || gameStudio.isEmpty() || gameStoreLink.isEmpty()) {
+            Toast.makeText(context, "Please, fill all the inputs!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_GAME_TITLE, game_title);
-        cv.put(COLUMN_GAME_STUDIO, game_studio);
-        cv.put(COLUMN_GAME_STORE_LINK, game_store_link);
+        cv.put(COLUMN_GAME_TITLE, gameTitle);
+        cv.put(COLUMN_GAME_STUDIO, gameStudio);
+        cv.put(COLUMN_GAME_STORE_LINK, gameStoreLink);
 
-        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id});
+        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{rowId});
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         }else {

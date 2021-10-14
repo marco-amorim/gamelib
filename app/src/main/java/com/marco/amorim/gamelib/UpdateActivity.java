@@ -47,7 +47,7 @@ public class UpdateActivity extends AppCompatActivity {
                 title = title_input.getText().toString().trim();
                 author = author_input.getText().toString().trim();
                 pages = pages_input.getText().toString().trim();
-                myDB.updateData(id, title, author, pages);
+                myDB.updateGame(id, title, author, pages);
             }
         });
         delete_button.setOnClickListener(new View.OnClickListener() {
