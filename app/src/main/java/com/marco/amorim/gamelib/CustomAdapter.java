@@ -55,9 +55,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(context, UpdateActivity.class);
                 intent.putExtra("id", String.valueOf(game_id.get(position)));
-                intent.putExtra("title", String.valueOf(game_title.get(position)));
-                intent.putExtra("author", String.valueOf(game_studio.get(position)));
-                intent.putExtra("pages", String.valueOf(game_store_link.get(position)));
+                intent.putExtra("game_title", String.valueOf(game_title.get(position)));
+                intent.putExtra("game_studio", String.valueOf(game_studio.get(position)));
+                intent.putExtra("game_store_link", String.valueOf(game_store_link.get(position)));
                 activity.startActivityForResult(intent, 1);
             }
         });

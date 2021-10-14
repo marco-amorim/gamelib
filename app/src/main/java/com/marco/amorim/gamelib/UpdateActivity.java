@@ -14,19 +14,19 @@ import android.widget.Toast;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText title_input, author_input, pages_input;
+    EditText game_title_input2, game_studio_input2, game_store_link_input2;
     Button update_button, delete_button;
 
-    String id, title, author, pages;
+    String id, gameTitle, gameStudio, gameStoreLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
-        title_input = findViewById(R.id.game_title_input2);
-        author_input = findViewById(R.id.game_studio_input2);
-        pages_input = findViewById(R.id.game_store_link_input2);
+        game_title_input2 = findViewById(R.id.game_title_input2);
+        game_studio_input2 = findViewById(R.id.game_studio_input2);
+        game_store_link_input2 = findViewById(R.id.game_store_link_input2);
         update_button = findViewById(R.id.update_button);
         delete_button = findViewById(R.id.delete_button);
 
@@ -36,7 +36,7 @@ public class UpdateActivity extends AppCompatActivity {
         //Set actionbar title after getAndSetIntentData method
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
-            ab.setTitle(title);
+            ab.setTitle(gameTitle);
         }
 
         update_button.setOnClickListener(new View.OnClickListener() {
@@ -44,10 +44,10 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //And only then we call this
                 DbHelper myDB = new DbHelper(UpdateActivity.this);
-                title = title_input.getText().toString().trim();
-                author = author_input.getText().toString().trim();
-                pages = pages_input.getText().toString().trim();
-                myDB.updateGame(id, title, author, pages);
+                gameTitle = game_title_input2.getText().toString().trim();
+                gameStudio = game_studio_input2.getText().toString().trim();
+                gameStoreLink = game_store_link_input2.getText().toString().trim();
+                myDB.updateGame(id, gameTitle, gameStudio, gameStoreLink);
             }
         });
         delete_button.setOnClickListener(new View.OnClickListener() {
@@ -60,19 +60,19 @@ public class UpdateActivity extends AppCompatActivity {
     }
 
     void getAndSetIntentData(){
-        if(getIntent().hasExtra("id") && getIntent().hasExtra("title") &&
-                getIntent().hasExtra("author") && getIntent().hasExtra("pages")){
+        if(getIntent().hasExtra("id") && getIntent().hasExtra("game_title") &&
+                getIntent().hasExtra("game_studio") && getIntent().hasExtra("game_store_link")){
             //Getting Data from Intent
             id = getIntent().getStringExtra("id");
-            title = getIntent().getStringExtra("title");
-            author = getIntent().getStringExtra("author");
-            pages = getIntent().getStringExtra("pages");
+            gameTitle = getIntent().getStringExtra("game_title");
+            gameStudio = getIntent().getStringExtra("game_studio");
+            gameStoreLink = getIntent().getStringExtra("game_store_link");
 
             //Setting Intent Data
-            title_input.setText(title);
-            author_input.setText(author);
-            pages_input.setText(pages);
-            Log.d("stev", title+" "+author+" "+pages);
+            game_title_input2.setText(gameTitle);
+            game_studio_input2.setText(gameStudio);
+            game_store_link_input2.setText(gameStoreLink);
+            Log.d("stev", gameTitle +" "+ gameStudio +" "+ gameStoreLink);
         }else{
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
         }
@@ -80,8 +80,8 @@ public class UpdateActivity extends AppCompatActivity {
 
     void confirmDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete " + title + " ?");
-        builder.setMessage("Are you sure you want to delete " + title + " ?");
+        builder.setTitle("Delete " + gameTitle + " ?");
+        builder.setMessage("Are you sure you want to delete " + gameTitle + " ?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
