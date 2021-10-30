@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             Cursor cursor = myDB.readAllData();
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.setType("text/html");
+            shareIntent.setType("text/plain");
 
             if (cursor.getCount() != 0) {
                 String response = "Check out my games on GameLib: \n \n";
