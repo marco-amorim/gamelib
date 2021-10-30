@@ -6,12 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -102,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.delete_all) {
-            confirmDialog();
+            confirmDeleteDialog();
         }
 
         if (item.getItemId() == R.id.share_menu) {
@@ -122,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 shareIntent.putExtra(Intent.EXTRA_TEXT, response);
                 startActivity(shareIntent);
             } else {
-                Toast.makeText(this, "Please add Games to your library to share!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please, add Games to your library to share", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -130,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void confirmDialog() {
+    void confirmDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete All?");
-        builder.setMessage("Are you sure you want to delete all Data?");
+        builder.setTitle("Delete All Games?");
+        builder.setMessage("Are you sure you want to delete all Games?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
