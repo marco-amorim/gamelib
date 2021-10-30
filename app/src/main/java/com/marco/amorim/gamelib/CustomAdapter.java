@@ -1,5 +1,6 @@
 package com.marco.amorim.gamelib;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -44,7 +45,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.game_id_txt.setText(String.valueOf(game_id.get(position)));
         holder.game_title_txt.setText(String.valueOf(game_title.get(position)));
         holder.game_studio_txt.setText(String.valueOf(game_studio.get(position)));
