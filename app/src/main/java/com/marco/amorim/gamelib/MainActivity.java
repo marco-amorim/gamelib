@@ -6,16 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         storeDataInArrays();
 
-        customAdapter = new CustomAdapter(MainActivity.this,this, game_id, game_title, game_studio,
+        customAdapter = new CustomAdapter(MainActivity.this, this, game_id, game_title, game_studio,
                 game_store_link);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -67,18 +70,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1){
+        if (requestCode == 1) {
             recreate();
         }
     }
 
-    void storeDataInArrays(){
+    void storeDataInArrays() {
         Cursor cursor = myDB.readAllData();
-        if(cursor.getCount() == 0){
+        if (cursor.getCount() == 0) {
             empty_imageview.setVisibility(View.VISIBLE);
             no_data.setVisibility(View.VISIBLE);
-        }else{
-            while (cursor.moveToNext()){
+        } else {
+            while (cursor.moveToNext()) {
                 game_id.add(cursor.getString(0));
                 game_title.add(cursor.getString(1));
                 game_studio.add(cursor.getString(2));
@@ -98,13 +101,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.delete_all){
+        if (item.getItemId() == R.id.delete_all) {
             confirmDialog();
         }
+
+        if (item.getItemId() == R.id.share_menu) {
+            Cursor cursor = myDB.readAllData();
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.setType("text/html");
+
+            if (cursor.getCount() != 0) {
+                String response = "Check out my games on GameLib: \n \n";
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    response = response + "Game: " + game_title.get(i) + "\n";
+                    response = response + "Studio: " + game_studio.get(i) + "\n";
+                    response = response + "Where to Buy: " + game_store_link.get(i) + "\n \n";
+                }
+
+                shareIntent.putExtra(Intent.EXTRA_TEXT, response);
+                startActivity(shareIntent);
+            } else {
+                Toast.makeText(this, "Please add Games to your library to share!", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
-    void confirmDialog(){
+    void confirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete All?");
         builder.setMessage("Are you sure you want to delete all Data?");
