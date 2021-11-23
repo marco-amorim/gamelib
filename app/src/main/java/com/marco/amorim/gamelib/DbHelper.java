@@ -85,6 +85,11 @@ class DbHelper extends SQLiteOpenHelper {
             return;
         }
 
+        if (!URLUtil.isValidUrl(gameStoreLink)) {
+            Toast.makeText(context, "Please, insert a valid URL in the Store Link", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_GAME_TITLE, gameTitle);
